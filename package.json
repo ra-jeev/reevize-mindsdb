@@ -1,0 +1,28 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxthq/ui": "^2.7.0",
+    "nuxt": "3.6.5",
+    "prisma": "^5.2.0"
+  },
+  "dependencies": {
+    "@firebase/app-types": "^0.9.0",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@prisma/client": "^5.2.0",
+    "firebase": "^10.3.0",
+    "firebase-admin": "^11.10.1",
+    "firebase-functions": "^4.4.1",
+    "mindsdb-js-sdk": "^2.2.2",
+    "nuxt-vuefire": "^0.2.18",
+    "vuefire": "^3.1.15"
+  }
+}

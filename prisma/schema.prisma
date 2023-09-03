@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  id        Int     @id @default(autoincrement())
+  text      String  @db.TinyText
+  answer    String  @db.TinyText
+  options   Json    @db.Json
+  contentId String
+  content   Content @relation(fields: [contentId], references: [id])
+  quizzes   Quiz[]
+
+  @@map("question")
+}
+
+model Content {
+  id        String     @id @default(cuid())
+  text      String     @db.Text
+  mcqCount  Int        @default(0)
+  trueCount Int        @default(0)
+  result    String?    @db.Text
+  questions Question[]
+
+  @@map("content")
+}
+
+model Tag {
+  id      Int    @id @default(autoincrement())
+  name    String @unique
+  quizzes Quiz[]
+
+  @@map("tag")
+}
+
+model User {
+  id      String @id
+  name    String
+  email   String @unique
+  quizzes Quiz[]
+
+  @@map("user")
+}
+
+model Quiz {
+  id          String     @id @default(cuid())
+  name        String
+  published   Boolean    @default(false)
+  description String?    @db.TinyText
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  tags        Tag[]
+  questions   Question[]
+  creatorId   String
+  creator     User       @relation(fields: [creatorId], references: [id])
+
+  @@map("quiz")
+}
