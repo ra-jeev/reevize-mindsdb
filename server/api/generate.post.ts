@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const result = await generateQuestions({
-      text: body.text,
+      text: body.text.replaceAll("'", ""),
       mcqCount,
       trueCount,
     });

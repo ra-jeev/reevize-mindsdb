@@ -1,5 +1,6 @@
 import MindsDB from "mindsdb-js-sdk";
 import { createId } from "@paralleldrive/cuid2";
+import prisma from "./prisma";
 
 export type QuestionsRequest = {
   text: string;
@@ -20,12 +21,22 @@ const connectMindsDb = async () => {
   if (!_mindsDb) {
     console.log("MindsDB not connected: connecting");
     try {
+      let connectParams;
+      if (process.env.MINDSDB_USER) {
+        connectParams = {
+          user: process.env.MINDSDB_USER,
+          password: process.env.MINDSDB_PASSWORD,
+        };
+      } else {
+        connectParams = {
+          user: "",
+          password: "",
+          host: "http://localhost:47334",
+        };
+      }
+
       //@ts-ignore
-      await MindsDB.default.connect({
-        user: "",
-        password: "",
-        host: "http://localhost:47334",
-      });
+      await MindsDB.default.connect(connectParams);
 
       console.log("connected");
 
@@ -44,11 +55,14 @@ const saveQuestionsRequest = async (request: QuestionsRequest) => {
   try {
     const id = createId();
 
-    const sqlRes = await _mindsDb.SQL
-      .runQuery(`INSERT INTO reevizeDB.Content (id, text, mcqCount, trueCount, result) \
-        VALUES ('${id}', '${request.text}', ${request.mcqCount}, ${request.trueCount}, '${request.result}')`);
+    const res = await prisma.content.create({
+      data: {
+        id,
+        ...request,
+      },
+    });
 
-    console.log("sqlRes", sqlRes);
+    console.log("sqlRes", res);
 
     return {
       id,
