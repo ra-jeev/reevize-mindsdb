@@ -7,15 +7,15 @@ const onLinkClick = () => {
 
 const links = [
   {
-    label: "Create",
+    label: "Dashboard",
     icon: "i-heroicons-home",
-    to: "/create",
+    to: "/dashboard",
     click: onLinkClick,
   },
   {
-    label: "Quizzes",
+    label: "Create",
     icon: "i-heroicons-queue-list-solid",
-    to: "/quizzes",
+    to: "/create",
     click: onLinkClick,
   },
 ];

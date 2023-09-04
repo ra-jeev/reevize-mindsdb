@@ -70,7 +70,7 @@ const generateQuestions = async (input: {
 
 const handleQuizPublish = () => {
   if (!user.value) {
-    showQuizModal.value = true;
+    showAuthModal.value = true;
   } else {
     showAuthModal.value = false;
     showQuizModal.value = true;

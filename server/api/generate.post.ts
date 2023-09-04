@@ -1,9 +1,9 @@
-import { generateQuestions, type QuestionsRequest } from "../mindsDb";
+import { generateQuestions } from "../mindsDb";
 
 export default defineEventHandler(async (event) => {
   console.log("incoming post event for api/generate/");
 
-  const body = (await readBody(event)) as QuestionsRequest;
+  const body = await readBody(event);
   console.log("body", body);
   if (!body.text) {
     throw createError({
@@ -12,8 +12,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  let mcqCount = body.mcqCount || 0;
-  const trueCount = body.trueCount || 0;
+  let mcqCount = body.mcqCount ? parseInt(body.mcqCount) : 0;
+  const trueCount = body.trueCount ? parseInt(body.trueCount) : 0;
   if (!(mcqCount + trueCount)) {
     mcqCount = 5;
   }

@@ -9,7 +9,7 @@ const isOpen = ref(false);
       <UContainer>
         <div class="flex">
           <AppDrawer class="hidden md:block" />
-          <div class="w-full lg:px-6 py-6">
+          <div class="w-full py-6">
             <slot />
           </div>
         </div>

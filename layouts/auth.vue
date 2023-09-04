@@ -5,7 +5,7 @@ watch(
   user,
   () => {
     if (user.value) {
-      return navigateTo("/play", { replace: true });
+      return navigateTo("/dashboard", { replace: true });
     }
   },
   { immediate: true }
