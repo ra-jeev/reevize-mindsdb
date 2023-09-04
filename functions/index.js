@@ -19,7 +19,7 @@ setGlobalOptions({ maxInstances: 10 });
 const client = new ImageAnnotatorClient();
 
 exports.extractTextFromImages = onRequest(
-  { cors: ["http://localhost:3000"] },
+  { cors: ["http://localhost:3000", "https://reevize.onrender.com"] },
   async (request, response) => {
     logger.info("Hello ExtractTextFromImage!", { structuredData: true });
 
