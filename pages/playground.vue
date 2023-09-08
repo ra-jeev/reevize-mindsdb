@@ -6,6 +6,8 @@ if (user.value) {
   navigateTo("/create");
 }
 
+const outputRef = ref();
+const questionsRef = ref();
 const loading = ref(false);
 const showQuizModal = ref(false);
 const showAuthModal = ref(false);
@@ -43,6 +45,8 @@ const parseQuestions = (
       const qs = JSON.parse(result.value);
       questions.value = [...qs];
       contentId.value = result.id;
+
+      questionsRef.value.scrollIntoView({ behavior: "smooth" });
       return;
     } catch (error) {
       console.log("failed to find JSON data");
@@ -58,6 +62,7 @@ const generateQuestions = async (input: {
   trueCount: number;
 }) => {
   loading.value = true;
+  outputRef.value.scrollIntoView({ behavior: "smooth" });
   const res = await $fetch<GenerateResponse>("/api/generate", {
     method: "POST",
     body: input,
@@ -102,7 +107,10 @@ const handleQuizPublish = () => {
       </UTabs>
     </div>
     <div class="w-full mt-6 lg:mt-0 lg:w-1/2 lg:p-2">
-      <h2 class="text-xl md:text-2xl text-center p-2 border rounded mb-4">
+      <h2
+        ref="outputRef"
+        class="text-xl md:text-2xl text-center p-2 border rounded mb-4"
+      >
         The Output
       </h2>
 
@@ -110,6 +118,7 @@ const handleQuizPublish = () => {
 
       <template v-else-if="questions.length">
         <h3
+          ref="questionsRef"
           class="text-gray-900 dark:text-white flex items-center justify-between"
         >
           <span class="text-lg md:text-xl lg:text-2xl font-semibold">
