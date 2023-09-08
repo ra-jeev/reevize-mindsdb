@@ -41,7 +41,7 @@ const parseQuestions = (
   if (result?.value) {
     try {
       const qs = JSON.parse(result.value);
-      questions.value.push(...qs);
+      questions.value = [...qs];
       contentId.value = result.id;
       return;
     } catch (error) {
@@ -79,8 +79,8 @@ const handleQuizPublish = () => {
 </script>
 
 <template>
-  <UContainer class="flex py-4">
-    <div class="w-full md:w-1/2 p-2">
+  <UContainer class="flex flex-wrap py-4">
+    <div class="w-full lg:w-1/2 lg:p-2">
       <h2 class="text-xl md:text-2xl text-center p-2 border rounded mb-4">
         Your Input
       </h2>
@@ -101,7 +101,7 @@ const handleQuizPublish = () => {
         </template>
       </UTabs>
     </div>
-    <div class="w-full md:w-1/2 p-2">
+    <div class="w-full mt-6 lg:mt-0 lg:w-1/2 lg:p-2">
       <h2 class="text-xl md:text-2xl text-center p-2 border rounded mb-4">
         The Output
       </h2>
@@ -112,12 +112,16 @@ const handleQuizPublish = () => {
         <h3
           class="text-gray-900 dark:text-white flex items-center justify-between"
         >
-          <span class="text-2xl font-semibold">Generated Questions</span>
+          <span class="text-lg md:text-xl lg:text-2xl font-semibold">
+            Generated Questions
+          </span>
           <div class="flex gap-2">
             <UButton size="2xs" variant="outline" @click="router.go(0)">
               Reset
             </UButton>
-            <UButton size="2xs" @click="handleQuizPublish">Publish</UButton>
+            <UButton size="2xs" @click="handleQuizPublish">
+              Publish quiz
+            </UButton>
           </div>
         </h3>
 
@@ -128,7 +132,10 @@ const handleQuizPublish = () => {
         >
           <p>{{ index + 1 }}. {{ question.text }}</p>
           <div class="flex flex-wrap">
-            <div v-for="(option, i) in question.options" class="w-1/2 p-2">
+            <div
+              v-for="(option, i) in question.options"
+              class="w-full sm:w-1/2 p-2"
+            >
               {{ choices[i] }} {{ option }}
             </div>
           </div>
@@ -156,7 +163,10 @@ const handleQuizPublish = () => {
           alt="Cartoon for taking decision"
           class="max-w-full w-[320px]"
         />
-        <p class="text-gray-400 mt-8">
+        <p class="text-gray-400 mt-8 lg:hidden">
+          Add your input above, and wait for the magic...
+        </p>
+        <p class="text-gray-400 mt-8 hidden lg:block">
           Add your input on the left, and wait for the magic...
         </p>
       </div>
