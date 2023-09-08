@@ -53,6 +53,7 @@ const onBtnClick = () => {
           <URadio
             v-for="(option, i) in question.options"
             :key="`option-${index}${i}`"
+            :ui="{ border: 'dark:border-gray-500' }"
             v-model="question.selected"
             v-bind="option"
             :disabled="showAnswers"
